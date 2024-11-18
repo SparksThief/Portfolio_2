@@ -10,9 +10,11 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 public class StudyProgramApp extends Application {
-    private final CourseModel courseModel = new CourseModel(); // Connects to the database
-    private final StudyProgramController controller = new StudyProgramController(); // Controller instance
+    // Opret instansvariabler til kursusmodellen og controlleren
+    private final CourseModel courseModel = new CourseModel(); // Forbinder til databasen
+    private final StudyProgramController controller = new StudyProgramController(); // Controller instans
 
+    // Deklarer UI-komponenterne (ComboBoxes, ListViews, Labels, Button)
     private ComboBox<String> programBox;
     private ComboBox<String> subject1Box;
     private ComboBox<String> subject2Box;
@@ -29,9 +31,10 @@ public class StudyProgramApp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        // Start-metoden: Opsæt applikationens primære vindue
         primaryStage.setTitle("Study Program");
 
-        // Setup UI components
+        // Setup UI-komponenter
         programBox = new ComboBox<>();
         subject1Box = new ComboBox<>();
         subject2Box = new ComboBox<>();
@@ -46,7 +49,7 @@ public class StudyProgramApp extends Application {
         electiveEctsLabel = new Label("ECTS: 0");
         addCourseButton = new Button("Add Course");
 
-        // Set up the controller with references to the UI components
+        // Sæt controlleren op med referencer til UI-komponenterne, så controlleren kan styre logikken
         controller.setUIComponents(
                 programBox, subject1Box, subject2Box, electiveBox,
                 selectedProgramCoursesListView, selectedSubject1CoursesListView,
@@ -54,53 +57,55 @@ public class StudyProgramApp extends Application {
                 programEctsLabel, subject1EctsLabel, subject2EctsLabel, electiveEctsLabel,
                 courseModel);
 
-        // Load courses from database into ComboBoxes
-        controller.loadCourses();  // Use the controller to fill the ComboBoxes
+        // Indlæs kurser fra databasen til ComboBoxes ved brug af controlleren
+        controller.loadCourses();  // Brug controlleren til at fylde ComboBoxes
 
-        // Action for the Add Course button (delegated to controller)
+        // Tilføj en event-handler til knappen "Add Course" for at tilføje de valgte kurser til de respektive lister
         addCourseButton.setOnAction(event -> controller.addSelectedCourses());
 
-        // Layout setup
+        // Layout-opsætning ved brug af GridPane med margener, rækker og kolonner
         GridPane grid = new GridPane();
-        grid.setHgap(10);
-        grid.setVgap(10);
-        grid.setPadding(new Insets(20));
+        grid.setHgap(10); // Indstil vandret afstand mellem elementer
+        grid.setVgap(10); // Indstil lodret afstand mellem elementer
+        grid.setPadding(new Insets(20)); // Indstil indvendige margener for layoutet
 
-        // Adding UI elements to the layout
-        grid.add(new Label("Program"), 0, 0);
-        grid.add(programBox, 0, 1);
-        grid.add(new Label("Subject 1"), 1, 0);
-        grid.add(subject1Box, 1, 1);
-        grid.add(new Label("Subject 2"), 2, 0);
-        grid.add(subject2Box, 2, 1);
-        grid.add(new Label("Elective"), 3, 0);
-        grid.add(electiveBox, 3, 1);
+        // Tilføj UI-elementer til layoutet for at bygge brugergrænsefladen
+        grid.add(new Label("Program"), 0, 0); // Tilføj label for programvalg
+        grid.add(programBox, 0, 1); // Tilføj ComboBox til programvalg
+        grid.add(new Label("Subject 1"), 1, 0); // Tilføj label for emne 1
+        grid.add(subject1Box, 1, 1); // Tilføj ComboBox til emne 1
+        grid.add(new Label("Subject 2"), 2, 0); // Tilføj label for emne 2
+        grid.add(subject2Box, 2, 1); // Tilføj ComboBox til emne 2
+        grid.add(new Label("Elective"), 3, 0); // Tilføj label for valgfag
+        grid.add(electiveBox, 3, 1); // Tilføj ComboBox til valgfag
 
-        grid.add(addCourseButton, 0, 2, 4, 1);
+        // Tilføj "Add Course"-knappen til layoutet
+        grid.add(addCourseButton, 0, 2, 4, 1); // Tilføj knappen og lad den strække sig over alle fire kolonner
 
-        // Add ListView and ECTS labels for each category
-        grid.add(new Label("Selected Program Courses"), 0, 3);
-        grid.add(selectedProgramCoursesListView, 0, 4);
-        grid.add(programEctsLabel, 0, 5);
+        // Tilføj ListView og ECTS labels for hver kategori
+        grid.add(new Label("Selected Program Courses"), 0, 3); // Label for valgte kurser i programmet
+        grid.add(selectedProgramCoursesListView, 0, 4); // ListView for valgte programkurser
+        grid.add(programEctsLabel, 0, 5); // Label for ECTS point i programmet
 
-        grid.add(new Label("Selected Subject 1 Courses"), 1, 3);
-        grid.add(selectedSubject1CoursesListView, 1, 4);
-        grid.add(subject1EctsLabel, 1, 5);
+        grid.add(new Label("Selected Subject 1 Courses"), 1, 3); // Label for valgte kurser i emne 1
+        grid.add(selectedSubject1CoursesListView, 1, 4); // ListView for valgte kurser i emne 1
+        grid.add(subject1EctsLabel, 1, 5); // Label for ECTS point i emne 1
 
-        grid.add(new Label("Selected Subject 2 Courses"), 2, 3);
-        grid.add(selectedSubject2CoursesListView, 2, 4);
-        grid.add(subject2EctsLabel, 2, 5);
+        grid.add(new Label("Selected Subject 2 Courses"), 2, 3); // Label for valgte kurser i emne 2
+        grid.add(selectedSubject2CoursesListView, 2, 4); // ListView for valgte kurser i emne 2
+        grid.add(subject2EctsLabel, 2, 5); // Label for ECTS point i emne 2
 
-        grid.add(new Label("Selected Elective Courses"), 3, 3);
-        grid.add(selectedElectiveCoursesListView, 3, 4);
-        grid.add(electiveEctsLabel, 3, 5);
+        grid.add(new Label("Selected Elective Courses"), 3, 3); // Label for valgte valgfag
+        grid.add(selectedElectiveCoursesListView, 3, 4); // ListView for valgte valgfag
+        grid.add(electiveEctsLabel, 3, 5); // Label for ECTS point i valgfag
 
-        Scene scene = new Scene(grid, 800, 600);
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        // Opret scenen med layoutet og vis applikationen
+        Scene scene = new Scene(grid, 800, 600); // Opret en scene med GridPane-layoutet
+        primaryStage.setScene(scene); // Sæt scenen på det primære vindue
+        primaryStage.show(); // Vis det primære vindue
     }
 
     public static void main(String[] args) {
-        launch(args);
+        launch(args); // Start JavaFX-applikationen
     }
 }
