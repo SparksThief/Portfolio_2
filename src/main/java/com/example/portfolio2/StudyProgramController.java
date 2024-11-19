@@ -67,6 +67,7 @@ public class StudyProgramController {
         subject1Box.getItems().addAll(subject1Courses);
         subject2Box.getItems().addAll(subject2Courses);
         electiveBox.getItems().addAll(electiveCourses);
+
     }
 
     // Tilføjer valgte kurser fra alle ComboBoxes

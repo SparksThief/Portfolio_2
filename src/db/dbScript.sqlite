@@ -43,6 +43,10 @@ insert into Program (name) values ('HumTek');
 insert into Subject (name,program_id) values ('Computer Science', 1);
 insert into Subject (name,program_id) values ('Informatik',1);
 
+-- Insert electives into the Elective table
+insert into Elective (elective_id, name) values (1, 'Scientific Computing');
+insert into Elective (elective_id, name) values (2, 'Functional Programming and Languages');
+
 -- Insert subjects into Activity
 insert into Activity (name, ects, subject_id) values ('Software Development',10, 1);
 insert into Activity (name, ects, subject_id) values ('Essential Computing',5,1);
@@ -50,7 +54,7 @@ insert into Activity (name, ects, subject_id) values ('Interactive Digital Syste
 
 -- Insert electives into Activity
 insert into Activity (name, ects, elective_id) values ('Scientific Computing', 10, 1);
-insert into Activity (name, ects, elective_id) values ('Functional Programming and languages',10,1);
+insert into Activity (name, ects, elective_id) values ('Functional Programming and Languages',10,2);
 
 -- Tables made for calculate the total ECTS points that a student has signed up for.
 -- Student table
@@ -84,3 +88,4 @@ FROM Student
          JOIN StudentActivity ON Student.student_id = StudentActivity.student_id
          JOIN Activity ON StudentActivity.activity_id = Activity.activity_id
 WHERE Student.student_id = 92101;
+
